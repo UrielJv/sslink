@@ -30,6 +30,20 @@
                     <span class="nav-link-text ms-1">Tables</span>
                 </a>
             </li> --}}
+            {{-- <li class="nav-item">
+                @auth
+                    <form method="POST" action="{{ route('logout') }}" class="mt-auto px-3 pb-3">
+                        @csrf
+                        <button type="submit"
+                            class="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-sign-out-alt me-2"></i>
+                            Cerrar sesión
+                        </button>
+                    </form>
+                @endauth
+            </li> --}}
+
+
 
         </ul>
     </div>
