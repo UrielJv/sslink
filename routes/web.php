@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EstudianteController;
 
 // Ruta raiz
 Route::get('/', function () {
@@ -23,3 +24,11 @@ Route::post('/logout', [AuthController::class, 'logout'])
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware('auth')->name('dashboard');
+
+
+// Rutas protegidas
+Route::middleware(['auth'])->group(function () {
+
+    Route::resource('estudiantes', EstudianteController::class);
+
+});
