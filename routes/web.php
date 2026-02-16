@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EstudianteController;
+use App\Http\Controllers\EncargadoController;
 
 // Ruta raiz
 Route::get('/', function () {
@@ -30,5 +31,6 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth'])->group(function () {
 
     Route::resource('estudiantes', EstudianteController::class);
+    Route::resource('encargados', EncargadoController::class);
 
 });
