@@ -7,6 +7,8 @@
 
     <title>@yield('title', 'SSLink')</title>
 
+    <link rel="icon" type="image/png" href="{{ asset('assets/img/sslink_logo.png') }}">
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
 
