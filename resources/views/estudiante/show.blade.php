@@ -32,7 +32,7 @@
         {{-- Card principal --}}
         <div class="card">
 
-            {{-- Header visual tipo perfil --}}
+            {{-- Header --}}
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
 
@@ -152,6 +152,15 @@
                                 <div class="mb-3">
                                     <div class="text-xs text-muted">Área asignada</div>
                                     <div class="fw-bold">{{ $estudiante->area ?? '—' }}</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="text-xs text-muted">Encargado</div>
+                                    <div class="fw-bold">
+                                        {{ $estudiante->encargado?->user?->nombre }}
+                                        {{ $estudiante->encargado?->user?->apellido_paterno }}
+                                        {{ $estudiante->encargado?->user?->apellido_materno }}
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Estudiante;
+use App\Models\Encargado;
 use Illuminate\Validation\Rule;
 
 
@@ -27,7 +28,12 @@ class EstudianteController extends Controller
 
     public function create()
     {
-        return view('estudiante.create');
+        $encargados = Encargado::with('user')
+        ->where('estatus', true)
+        ->orderBy('id', 'desc')
+        ->get();
+
+        return view('estudiante.create', compact('encargados'));
     }
 
 
@@ -44,6 +50,7 @@ class EstudianteController extends Controller
             'password' => ['required', 'string', 'max:255'],
 
             // Estudiante
+            'encargado_id' => ['required', 'exists:encargados,id'],
             'calle' => ['required', 'string', 'max:255'],
             'codigo_postal' => ['required', 'string', 'max:255'],
             'numero_exterior' => ['required', 'string', 'max:255'],
@@ -75,18 +82,22 @@ class EstudianteController extends Controller
                 'password' => bcrypt($request->password),
             ]);
 
-            // asignamos el rol que tendra
+            //asignamos el rol que tendra
             $user->assignRole('estudiante');
 
-            // creamos el registro del estudiante
+            //Obtener encargado
+            $encargado = Encargado::findOrFail($request->encargado_id);
+
+            //creamos el registro del estudiante
             Estudiante::create([
                 'user_id' => $user->id,
+                'encargado_id' => $encargado->id,
+                'area' => $encargado->area,
                 'matricula' => $request->matricula,
                 'carrera' => $request->carrera,
                 'escuela' => $request->escuela,
                 'cct' => $request->cct,
                 'horas_requeridas' => $request->horas_requeridas,
-                'area' => $request->area,
                 'fecha_inicio' => $request->fecha_inicio,
                 'fecha_fin' => $request->fecha_fin,
                 'calle' => $request->calle,
@@ -113,7 +124,7 @@ class EstudianteController extends Controller
 
     public function show(Estudiante $estudiante)
     {
-        $estudiante->load('user');
+        $estudiante->load(['user', 'encargado.user']);
 
         return view('estudiante.show', compact('estudiante'));
     }
@@ -123,7 +134,12 @@ class EstudianteController extends Controller
     {
         $estudiante->load('user');
 
-        return view('estudiante.edit', compact('estudiante'));
+        $encargados = Encargado::with('user')
+        ->where('estatus', true)
+        ->orderBy('id', 'desc')
+        ->get();
+
+        return view('estudiante.edit', compact('estudiante', 'encargados'));
     }
 
 
@@ -143,6 +159,7 @@ class EstudianteController extends Controller
             'password'          => ['nullable', 'string'],
 
             // Estudiante
+            'encargado_id' => ['required', 'exists:encargados,id'],
             'calle'             => ['required', 'string', 'max:255'],
             'codigo_postal'     => ['required', 'string', 'max:255'],
             'numero_exterior'   => ['required', 'string', 'max:255'],
@@ -182,17 +199,20 @@ class EstudianteController extends Controller
             // Actualizacion a user
             $estudiante->user->update($userData);
 
+            //Obtener encargado nuevo
+            $encargado = Encargado::findOrFail($request->encargado_id);
+
             // Actualizacion de estudiante
             $estudiante->update([
+                'encargado_id' => $encargado->id,
+                'area' => $encargado->area,
                 'matricula' => $request->matricula,
                 'carrera' => $request->carrera,
                 'escuela' => $request->escuela,
                 'cct' => $request->cct,
                 'horas_requeridas' => $request->horas_requeridas,
-                'area' => $request->area,
                 'fecha_inicio' => $request->fecha_inicio,
                 'fecha_fin' => $request->fecha_fin,
-
                 'calle' => $request->calle,
                 'numero_exterior' => $request->numero_exterior,
                 'numero_interior' => $request->numero_interior,
