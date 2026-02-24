@@ -47,6 +47,11 @@ class Estudiante extends Model
     {
         return $this->belongsTo(Encargado::class);
     }
+
+    public function getServicioTerminadoAttribute()
+    {
+        return $this->horas_actuales >= $this->horas_requeridas;
+    }
 }
 
 
