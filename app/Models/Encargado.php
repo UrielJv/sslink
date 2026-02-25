@@ -20,4 +20,9 @@ class Encargado extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function estudiantes()
+    {
+        return $this->hasMany(Estudiante::class);
+    }
 }

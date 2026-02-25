@@ -10,6 +10,7 @@ class Estudiante extends Model
 
     protected $fillable = [
         'user_id',
+        'encargado_id',
         'calle',
         'numero_exterior',
         'numero_interior',
@@ -40,6 +41,16 @@ class Estudiante extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function encargado()
+    {
+        return $this->belongsTo(Encargado::class);
+    }
+
+    public function getServicioTerminadoAttribute()
+    {
+        return $this->horas_actuales >= $this->horas_requeridas;
     }
 }
 

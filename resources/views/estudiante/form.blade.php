@@ -156,13 +156,40 @@
             </div>
         </div>
 
-        {{-- Area (Tentativamente select igual) --}}
+        {{-- Encargado --}}
         <div class="col-md-4">
             <div class="form-group">
-                <label for="example-text-input" class="form-control-label">Área asignada <span
-                        class="text-danger">*</span></label>
-                <input name="area" class="form-control" type="text" placeholder="Cabildo" required
-                    value="{{ old('area', $estudiante->area ?? '') }}">
+                <label class="form-control-label">
+                    Encargado{{-- <span class="text-danger">*</span> --}}
+                </label>
+
+                <select name="encargado_id" id="encargadoSelect" class="form-control" required>
+                    <option value="" disabled
+                        {{ old('encargado_id', $estudiante->encargado_id ?? '') == '' ? 'selected' : '' }}>
+                        Selecciona
+                    </option>
+
+                    @foreach ($encargados as $encargado)
+                        <option value="{{ $encargado->id }}" data-area="{{ $encargado->area }}"
+                            {{ old('encargado_id', $estudiante->encargado_id ?? '') == $encargado->id ? 'selected' : '' }}>
+                            {{ $encargado->user->nombre ?? 'Sin nombre' }}
+                            {{ $encargado->user->apellido_paterno ?? '' }}
+                            {{ $encargado->user->apellido_materno ?? '' }}
+                            ({{ $encargado->cargo }})
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
+        {{-- Area --}}
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="form-control-label">
+                    Área asignada{{-- <span class="text-danger">*</span> --}}
+                </label>
+                <input name="area" id="areaInput" class="form-control" type="text" placeholder="Cabildo"
+                    required readonly value="{{ old('area', $estudiante->area ?? '') }}">
             </div>
         </div>
 
@@ -176,7 +203,8 @@
             </div>
         </div>
 
-        <div class="col-md-8">
+        {{-- Contraseña asiganda --}}
+        <div class="col-md-4">
             <div class="form-group">
                 <label for="example-text-input" class="form-control-label">Contraseña asignada
                     @if (!isset($estudiante))
@@ -215,7 +243,9 @@
                     value="{{ old('fecha_fin', optional($estudiante->fecha_fin ?? null)->format('Y-m-d')) }}">
             </div>
         </div>
+
     </div>
+</div>
 </div>
 
 @push('scripts')
@@ -230,5 +260,23 @@
 
             document.getElementById('password').value = password;
         });
+    </script>
+
+    <script>
+        const encargadoSelect = document.getElementById('encargadoSelect');
+        const areaInput = document.getElementById('areaInput');
+
+        function setAreaFromEncargado() {
+            const option = encargadoSelect.options[encargadoSelect.selectedIndex];
+            const area = option ? option.getAttribute('data-area') : '';
+            areaInput.value = area || '';
+        }
+
+        if (encargadoSelect && areaInput) {
+            encargadoSelect.addEventListener('change', setAreaFromEncargado);
+
+            // Para que funcione al cargar en "editar" o si viene old()
+            window.addEventListener('load', setAreaFromEncargado);
+        }
     </script>
 @endpush
