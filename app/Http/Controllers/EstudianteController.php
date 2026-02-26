@@ -348,4 +348,13 @@ class EstudianteController extends Controller
 
         return $this->cartaAceptacion($estudiante);
     }
+    public function info()
+{
+    $user = auth()->user();
+
+    // Si el usuario es estudiante
+    $estudiante = $user->estudiante ?? null;
+
+    return view('estudiante.info', compact('estudiante'));
+}
 }

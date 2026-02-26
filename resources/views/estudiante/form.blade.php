@@ -248,6 +248,30 @@
 </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire({
+            title: 'Aviso de Privacidad',
+            html: `
+                <p style="text-align: justify;">
+                La información personal registrada en el sistema SSLink será utilizada
+                exclusivamente para la gestión y seguimiento del servicio social,
+                conforme a la <strong>Ley General de Protección de Datos Personales en Posesión de Sujetos Obligados</strong>.
+                </p>
+                <p style="text-align: justify;">
+                El Ayuntamiento de Tizayuca se compromete a proteger y resguardar la información
+                proporcionada.
+                </p>
+            `,
+            icon: 'info',
+            confirmButtonText: 'Aceptar',
+            allowOutsideClick: false
+        });
+    });
+</script>
+
 @push('scripts')
     <script>
         document.getElementById('generarPassword').addEventListener('click', function() {

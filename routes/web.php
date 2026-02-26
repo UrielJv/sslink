@@ -37,5 +37,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('estudiantes/{estudiante}/carta-termino',[EstudianteController::class, 'cartaTermino'])->name('estudiantes.cartaTermino');
 
     Route::get('estudiantes/{estudiante}/documentacion',[EstudianteController::class, 'descargarDocumentacion'])->name('estudiantes.documentacion');
+   
+    Route::get('/mi-informacion', [EstudianteController::class, 'info'])
+    ->name('estudiante.info');
 
 });
