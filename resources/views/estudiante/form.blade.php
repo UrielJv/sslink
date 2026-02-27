@@ -186,7 +186,7 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label class="form-control-label">
-                    Área asignada{{-- <span class="text-danger">*</span> --}}
+                    Área asignada {{-- <span class="text-danger">*</span> --}}
                 </label>
                 <input name="area" id="areaInput" class="form-control" type="text" placeholder="Cabildo"
                     required readonly value="{{ old('area', $estudiante->area ?? '') }}">
@@ -237,8 +237,7 @@
         {{-- Fecha de finalizacion --}}
         <div class="col-md-6">
             <div class="form-group">
-                <label for="example-text-input" class="form-control-label">Fecha de finalizacion <span
-                        class="text-danger">*</span></label>
+                <label for="example-text-input" class="form-control-label">Fecha de finalizacion</label>
                 <input name="fecha_fin" class="form-control" type="date" placeholder="Cabildo"
                     value="{{ old('fecha_fin', optional($estudiante->fecha_fin ?? null)->format('Y-m-d')) }}">
             </div>
@@ -251,7 +250,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         Swal.fire({
             title: 'Aviso de Privacidad',
             html: `

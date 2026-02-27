@@ -11,6 +11,8 @@ use App\Models\User;
 use App\Models\Estudiante;
 use App\Models\Encargado;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\RegistroMail;
 
 
 class EstudianteController extends Controller
@@ -111,6 +113,17 @@ class EstudianteController extends Controller
                 'sexo' => $request->sexo,
                 'telefono_tutor' => $request->telefono_tutor,
             ]);
+
+            // Armamos nombre completo del usuario
+            $nombreCompleto = $request->nombre . " " . $request->apellido_paterno . " " . $request->apellido_materno;
+
+            //Mandar correo de registro
+            Mail::to($request->email)->send(new RegistroMail(
+                $nombreCompleto,
+                $request->email,
+                $request->password,
+            ));
+
         });
 
             return redirect()

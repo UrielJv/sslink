@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\EncargadoController;
+use Illuminate\Support\Facades\Mail;
 
 // Ruta raiz
 Route::get('/', function () {
@@ -32,13 +33,19 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('estudiantes', EstudianteController::class);
     Route::resource('encargados', EncargadoController::class);
-    Route::get('estudiantes/{estudiante}/carta-aceptacion',[EstudianteController::class, 'cartaAceptacion'])->name('estudiantes.cartaAceptacion');
+    Route::get('estudiantes/{estudiante}/carta-aceptacion',[EstudianteController::class, 'cartaAceptacion'])
+        ->name('estudiantes.cartaAceptacion');
 
-    Route::get('estudiantes/{estudiante}/carta-termino',[EstudianteController::class, 'cartaTermino'])->name('estudiantes.cartaTermino');
+    Route::get('estudiantes/{estudiante}/carta-termino',[EstudianteController::class, 'cartaTermino'])
+        ->name('estudiantes.cartaTermino');
 
-    Route::get('estudiantes/{estudiante}/documentacion',[EstudianteController::class, 'descargarDocumentacion'])->name('estudiantes.documentacion');
-   
+    Route::get('estudiantes/{estudiante}/documentacion',[EstudianteController::class, 'descargarDocumentacion'])
+        ->name('estudiantes.documentacion');
+
     Route::get('/mi-informacion', [EstudianteController::class, 'info'])
-    ->name('estudiante.info');
+        ->name('estudiante.info');
 
 });
+
+
+

@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Encargado;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\RegistroMail;
 
 class EncargadoController extends Controller
 {
@@ -68,6 +70,17 @@ class EncargadoController extends Controller
                     'area' => $request->area,
                     'cargo' => $request->cargo,
                 ]);
+
+                // Armamos nombre completo del usuario
+                $nombreCompleto = $request->nombre . " " . $request->apellido_paterno . " " . $request->apellido_materno;
+
+                //Mandar correo de registro
+                Mail::to($request->email)->send(new RegistroMail(
+                    $nombreCompleto,
+                    $request->email,
+                    $request->password,
+                ));
+
             });
 
             return redirect()

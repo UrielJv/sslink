@@ -139,7 +139,13 @@
     {{-- Validación (422) --}}
     @if ($errors->any())
         <script>
-            toastr.error("Hay errores en el formulario. Revisa los campos marcados.");
+            toastr.error(`
+            <ul style="margin:0; padding-left:18px;">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        `);
         </script>
     @endif
 
