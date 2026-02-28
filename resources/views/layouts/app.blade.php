@@ -154,7 +154,7 @@
     <script src="{{ asset('assets/js/plugins/smooth-scrollbar.min.js') }}"></script>
     <script src="{{ asset('assets/js/argon-dashboard.min.js') }}"></script>
 
-    @stack('scripts')
+    @stack('javascript')
 
 </body>
 

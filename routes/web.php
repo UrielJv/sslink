@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\EncargadoController;
+use App\Http\Controllers\AsistenciaController;
 use Illuminate\Support\Facades\Mail;
 
 // Ruta raiz
@@ -44,6 +45,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/mi-informacion', [EstudianteController::class, 'info'])
         ->name('estudiante.info');
+
+    Route::resource('asistencias', AsistenciaController::class);
+
+    Route::get('estudiantes/{estudiante}/asistencias', [AsistenciaController::class, 'historial'])
+        ->name('asistencias.historial');
 
 });
 

@@ -15,6 +15,9 @@ class EncargadoController extends Controller
 
     public function index()
     {
+
+        $this->authorize('usuario.ver');
+
         $encargados = Encargado::with('user')
             ->where('estatus', 1)
             ->orderBy('created_at', 'desc')
@@ -26,12 +29,15 @@ class EncargadoController extends Controller
 
     public function create()
     {
+        $this->authorize('usuario.crear');
         return view('encargado.create');
     }
 
 
     public function store(Request $request)
     {
+
+        $this->authorize('usuario.crear');
 
         $request->validate([
             // Usuario
@@ -95,6 +101,7 @@ class EncargadoController extends Controller
 
     public function show(Encargado $encargado)
     {
+        $this->authorize('usuario.ver');
         $encargado->load('user');
 
         return view('encargado.show', compact('encargado'));
@@ -103,6 +110,7 @@ class EncargadoController extends Controller
 
     public function edit(Encargado $encargado)
     {
+        $this->authorize('usuario.editar');
         $encargado->load('user');
 
         return view('encargado.edit', compact('encargado'));
@@ -111,6 +119,7 @@ class EncargadoController extends Controller
 
     public function update(Request $request, Encargado $encargado)
     {
+        $this->authorize('usuario.editar');
 
         $encargado->load('user');
 
@@ -166,6 +175,7 @@ class EncargadoController extends Controller
 
     public function destroy(Encargado $encargado)
     {
+        $this->authorize('usuario.eliminar');
 
         try {
 

@@ -59,8 +59,8 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label class="form-control-label">Cargo <span class="text-danger">*</span></label>
-                <input name="cargo" class="form-control" type="text" placeholder="Supervisor"
-                    required value="{{ old('cargo', $encargado->cargo ?? '') }}">
+                <input name="cargo" class="form-control" type="text" placeholder="Supervisor" required
+                    value="{{ old('cargo', $encargado->cargo ?? '') }}">
             </div>
         </div>
 
@@ -75,8 +75,8 @@
                 </label>
 
                 <div class="input-group">
-                    <input name="password" id="password" class="form-control" type="text"
-                        placeholder="ABC12345" {{ isset($encargado) ? '' : 'required' }}>
+                    <input name="password" id="password" class="form-control" type="text" placeholder="ABC12345"
+                        {{ isset($encargado) ? '' : 'required' }}>
 
                     <span class="input-group-text p-0">
                         <button class="btn btn-link mb-0 px-3" type="button" id="generarPassword">
@@ -92,18 +92,18 @@
 </div>
 
 
-@push('scripts')
-<script>
-    document.getElementById('generarPassword').addEventListener('click', function() {
+@push('javascript')
+    <script>
+        document.getElementById('generarPassword').addEventListener('click', function() {
 
-        const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        let password = '';
+            const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let password = '';
 
-        for (let i = 0; i < 8; i++) {
-            password += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
-        }
+            for (let i = 0; i < 8; i++) {
+                password += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+            }
 
-        document.getElementById('password').value = password;
-    });
-</script>
+            document.getElementById('password').value = password;
+        });
+    </script>
 @endpush

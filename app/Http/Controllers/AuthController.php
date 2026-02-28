@@ -24,10 +24,27 @@ class AuthController extends Controller
 
         // Intentar login
         if (Auth::attempt($credentials)) {
-            // Evita ataques de sesión
             $request->session()->regenerate();
 
-            return redirect()->route('dashboard');
+            $user = Auth::user();
+
+            // Redirección por rol (prioridad)
+            if ($user->hasRole('admin')) {
+                return redirect()->route('dashboard');
+            }
+
+            if ($user->hasRole('encargado')) {
+                return redirect()->route('asistencias.index');
+            }
+
+            if ($user->hasRole('estudiante')) {
+                return redirect()->route('estudiante.info');
+            }
+
+            // Si por alguna razón no tiene rol
+            Auth::logout();
+            return redirect()->route('login')
+                ->withErrors(['email' => 'Tu cuenta no tiene rol asignado.']);
         }
 
         // Si falla

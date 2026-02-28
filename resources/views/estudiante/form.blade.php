@@ -271,7 +271,7 @@
     });
 </script>
 
-@push('scripts')
+@push('javascript')
     <script>
         document.getElementById('generarPassword').addEventListener('click', function() {
             const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

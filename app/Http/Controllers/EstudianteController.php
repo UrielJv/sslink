@@ -21,6 +21,8 @@ class EstudianteController extends Controller
     public function index()
     {
 
+        $this->authorize('usuario.ver');
+
         $estudiantes = Estudiante::with('user')
             ->where('estatus', 1)
             ->orderBy('created_at', 'desc')
@@ -43,6 +45,7 @@ class EstudianteController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('usuario.crear');
         // Validamos que los campos que vienen del formulario esten correctos
         $request->validate([
             // Usuario
@@ -139,6 +142,9 @@ class EstudianteController extends Controller
 
     public function show(Estudiante $estudiante)
     {
+
+        $this->authorize('usuario.ver');
+
         $estudiante->load(['user', 'encargado.user']);
 
         return view('estudiante.show', compact('estudiante'));
@@ -147,6 +153,8 @@ class EstudianteController extends Controller
 
     public function edit(Estudiante $estudiante)
     {
+        $this->authorize('usuario.editar');
+
         $estudiante->load('user');
 
         $encargados = Encargado::with('user')
@@ -160,6 +168,7 @@ class EstudianteController extends Controller
 
     public function update(Request $request, Estudiante $estudiante)
     {
+        $this->authorize('usuario.editar');
 
         // cargamos relacion por si no viene del formulario
         $estudiante->load('user');
@@ -253,6 +262,7 @@ class EstudianteController extends Controller
 
     public function destroy(Estudiante $estudiante)
     {
+        $this->authorize('usuario.eliminar');
         try {
 
         DB::transaction(function () use ($estudiante) {
