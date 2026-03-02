@@ -48,8 +48,8 @@
             </div>
 
             <div class="text-end">
-                <a href="#" class="btn btn-primary mb-2">
-                    <i class="fas fa-book me-1"></i> Bitácora
+                <a href="{{ route('bitacora.descargar', $estudiante->id) }}" class="btn btn-success mb-2">
+                    <i class="fas fa-file-excel me-1"></i> Bitácora
                 </a>
                 <div>
                     <span class="badge bg-info">

@@ -8,6 +8,8 @@ use App\Models\Estudiante;
 use App\Models\Asistencia;
 use App\Models\Actividad;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\BitacoraEstudianteExport;
 
 class AsistenciaController extends Controller
 {
@@ -126,6 +128,14 @@ class AsistenciaController extends Controller
             ->get();
 
         return view('asistencia.historial', compact('estudiante', 'asistencias'));
+    }
+
+    public function descargarBitacora(Estudiante $estudiante)
+    {
+        return Excel::download(
+            new BitacoraEstudianteExport($estudiante->id),
+            'bitacora_'.$estudiante->id.'.xlsx'
+        );
     }
 
 }

@@ -51,6 +51,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('estudiantes/{estudiante}/asistencias', [AsistenciaController::class, 'historial'])
         ->name('asistencias.historial');
 
+    Route::get('/bitacora/{estudiante}',[AsistenciaController::class, 'descargarBitacora'])
+        ->name('bitacora.descargar');
+
 });
 
 
