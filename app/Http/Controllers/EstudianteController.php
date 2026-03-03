@@ -128,14 +128,14 @@ class EstudianteController extends Controller
             ]);
 
             // Armamos nombre completo del usuario
-            $nombreCompleto = $request->nombre . " " . $request->apellido_paterno . " " . $request->apellido_materno;
+            // $nombreCompleto = $request->nombre . " " . $request->apellido_paterno . " " . $request->apellido_materno;
 
             //Mandar correo de registro
-            Mail::to($request->email)->send(new RegistroMail(
-                $nombreCompleto,
-                $request->email,
-                $request->password,
-            ));
+            // Mail::to($request->email)->send(new RegistroMail(
+            //     $nombreCompleto,
+            //     $request->email,
+            //     $request->password,
+            // ));
 
         });
 
