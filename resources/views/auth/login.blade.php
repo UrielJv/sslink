@@ -10,7 +10,7 @@
                 {{-- LEFT: IMAGE --}}
                 <div class="col-lg-6 d-none d-lg-block auth-left">
                     {{-- Si quieres usar una imagen local: public/img/login.jpg --}}
-                    <div class="auth-image" style="background-image: url('{{ asset('img/login.jpg') }}');">
+                    <div class="auth-image">
                         <div class="auth-overlay"></div>
 
                         <div class="auth-left-content">
