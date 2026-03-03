@@ -1,23 +1,19 @@
 FROM php:8.4-apache
 
-# Dependencias del sistema + extensiones para Laravel
+# Dependencias del sistema + extensiones necesarias (Laravel + MySQL + Spreadsheet)
 RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
+    git unzip \
     libzip-dev \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
+    libpng-dev libjpeg-dev libfreetype6-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo_mysql zip gd \
     && rm -rf /var/lib/apt/lists/*
 
-# Apache: SOLO mpm_prefork (fix "More than one MPM loaded") + rewrite
-RUN a2enmod rewrite \
-    && a2dismod mpm_event mpm_worker || true \
-    && rm -f /etc/apache2/mods-enabled/mpm_event.load /etc/apache2/mods-enabled/mpm_event.conf \
-             /etc/apache2/mods-enabled/mpm_worker.load /etc/apache2/mods-enabled/mpm_worker.conf || true \
-    && a2enmod mpm_prefork
+# FIX DEFINITIVO: dejar SOLO un MPM (prefork)
+RUN rm -f /etc/apache2/mods-enabled/mpm_*.load /etc/apache2/mods-enabled/mpm_*.conf \
+    && ln -sf ../mods-available/mpm_prefork.load /etc/apache2/mods-enabled/mpm_prefork.load \
+    && ln -sf ../mods-available/mpm_prefork.conf /etc/apache2/mods-enabled/mpm_prefork.conf \
+    && a2enmod rewrite
 
 # Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
