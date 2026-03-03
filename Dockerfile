@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pdo_mysql zip gd \
     && rm -rf /var/lib/apt/lists/*
 
-# FIX MPM definitivo: deshabilitar event/worker, dejar SOLO prefork
+# FIX MPM en build (ok)
 RUN a2dismod mpm_event mpm_worker || true \
     && a2enmod mpm_prefork rewrite \
     && rm -f /etc/apache2/mods-enabled/mpm_event.* /etc/apache2/mods-enabled/mpm_worker.* || true \
@@ -21,6 +21,10 @@ RUN a2dismod mpm_event mpm_worker || true \
 
 # Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Entrypoint (runtime fix)
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 WORKDIR /var/www/html
 COPY . .
@@ -38,4 +42,4 @@ RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-avail
     && sed -ri -e 's!/var/www/!/var/www/html/public!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 EXPOSE 80
-CMD ["apache2-foreground"]
+CMD ["/entrypoint.sh"]
