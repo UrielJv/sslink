@@ -5,7 +5,7 @@
 @section('page-title', 'Edición de encargado')
 
 @section('content')
-    <form action="{{ route('encargados.update', $encargado->id) }}" method="POST">
+    <form id="formUsuario" action="{{ route('encargados.update', $encargado->id) }}" method="POST">
         @csrf
         @method('PUT')
 
@@ -24,8 +24,9 @@
                             Cancelar
                         </a>
 
-                        <button type="submit" class="btn btn-sm btn-primary">
-                            Actualizar
+                        <button type="submit" id="btnSubmit" class="btn btn-sm btn-primary">
+                            <span id="btnText">Actualizar</span>
+                            <span id="btnSpinner" class="spinner-border spinner-border-sm d-none"></span>
                         </button>
                     </div>
                 </div>
@@ -61,3 +62,17 @@
     });
 </script>
 @endsection
+
+@push('javascript')
+    <script>
+        document.getElementById('formUsuario').addEventListener('submit', function() {
+            const btn = document.getElementById('btnSubmit');
+            const text = document.getElementById('btnText');
+            const spinner = document.getElementById('btnSpinner');
+
+            btn.disabled = true;
+            text.innerText = 'Actualizando...';
+            spinner.classList.remove('d-none');
+        });
+    </script>
+@endpush

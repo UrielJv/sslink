@@ -113,8 +113,9 @@
                         <i class="ni ni-bold-left me-1"></i> Cancelar
                     </a>
 
-                    <button type="submit" class="btn btn-success">
-                        <i class="ni ni-check-bold me-1"></i> Guardar asistencia
+                    <button type="submit" class="btn btn-success" id="btnSubmit">
+                        <span id="btnText"><i class="ni ni-check-bold me-1"></i> Guardar asistencia</span>
+                        <span id="btnSpinner" class="spinner-border spinner-border-sm d-none ms-2"></span>
                     </button>
 
                 </div>
@@ -219,6 +220,14 @@
                     form.appendChild(input);
                 });
             });
+
+            const btnSubmit = document.getElementById('btnSubmit');
+            const btnText = document.getElementById('btnText');
+            const btnSpinner = document.getElementById('btnSpinner');
+
+            btnSubmit.disabled = true;
+            btnText.innerHTML = 'Guardando...';
+            btnSpinner.classList.remove('d-none');
         });
     </script>
 @endpush

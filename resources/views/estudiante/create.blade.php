@@ -5,7 +5,7 @@
 @section('page-title', 'Registro de prestador')
 
 @section('content')
-    <form action="{{ route('estudiantes.store') }}" method="POST">
+    <form id="formUsuario" action="{{ route('estudiantes.store') }}" method="POST">
         @csrf
 
         <div class="card mb-4">
@@ -23,8 +23,9 @@
                             Cancelar
                         </a>
 
-                        <button type="submit" class="btn btn-sm btn-primary">
-                            Guardar
+                        <button type="submit" id="btnSubmit" class="btn btn-sm btn-primary">
+                            <span id="btnText">Guardar</span>
+                            <span id="btnSpinner" class="spinner-border spinner-border-sm d-none"></span>
                         </button>
                     </div>
                 </div>
@@ -38,3 +39,17 @@
     </form>
 
 @endsection
+
+@push('javascript')
+    <script>
+        document.getElementById('formUsuario').addEventListener('submit', function() {
+            const btn = document.getElementById('btnSubmit');
+            const text = document.getElementById('btnText');
+            const spinner = document.getElementById('btnSpinner');
+
+            btn.disabled = true;
+            text.innerText = 'Guardando...';
+            spinner.classList.remove('d-none');
+        });
+    </script>
+@endpush

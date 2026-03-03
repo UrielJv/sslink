@@ -45,13 +45,22 @@ class EncargadoController extends Controller
             'apellido_paterno' => ['required', 'string', 'max:255'],
             'apellido_materno' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users'],
-            'telefono' => ['required', 'unique:users'],
+            'telefono' => ['required', 'unique:users', 'digits:10'],
             'password' => ['required', 'string'],
 
             // Encargado
             'area' => ['required', 'string', 'max:255'],
             'cargo' => ['required', 'string', 'max:255'],
-        ]);
+        ],
+
+        // Array asociativo para mostrar errores
+        [
+            'email.unique' => 'El correo escrito ya esta registrado.',
+            'telefono.digits' => 'El número telefonico debe de ser de 10 digitos.',
+            'telefono.unique' => 'El número escrito ya esta registrado.',
+            'password.required' => 'El campo contraseña es obligatorio.'
+        ]
+        );
 
         try {
 
@@ -129,12 +138,20 @@ class EncargadoController extends Controller
             'apellido_paterno' => ['required', 'string', 'max:255'],
             'apellido_materno' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users,email,' . $encargado->user->id],
-            'telefono' => ['required', 'unique:users,telefono,' . $encargado->user->id],
+            'telefono' => ['required', 'digits:10', 'unique:users,telefono,' . $encargado->user->id],
             'password' => ['nullable', 'string'],
 
             // Encargado
             'area' => ['required', 'string', 'max:255'],
             'cargo' => ['required', 'string', 'max:255'],
+        ],
+
+        // Array asociativo para mostrar errores
+        [
+            'email.unique' => 'El correo escrito ya esta registrado.',
+            'telefono.digits' => 'El número telefonico debe de ser de 10 digitos.',
+            'telefono.unique' => 'El número escrito ya esta registrado.',
+            'password.required' => 'El campo contraseña es obligatorio.'
         ]);
 
         try {

@@ -42,12 +42,21 @@
                         <table id="tablaEstudiantes" class="table align-items-center mb-0">
                             <thead>
                                 <tr>
-                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Nombre</th>
-                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Matrícula</th>
-                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Carrera</th>
-                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">Horas</th>
-                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">Estado</th>
-                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">Acciones</th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Nombre
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Matrícula
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Carrera
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">
+                                        Horas</th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">
+                                        Estado</th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">
+                                        Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,8 +68,8 @@
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <h6 class="mb-0 text-sm">
-                                                        {{ $estudiante->user->nombre }} 
-                                                        {{ $estudiante->user->apellido_paterno }} 
+                                                        {{ $estudiante->user->nombre }}
+                                                        {{ $estudiante->user->apellido_paterno }}
                                                         {{ $estudiante->user->apellido_materno }}
                                                     </h6>
                                                     <p class="text-xs text-secondary mb-0">
@@ -93,7 +102,7 @@
 
                                         {{-- Estado dinámico --}}
                                         <td class="text-center">
-                                            @if($estudiante->servicio_terminado)
+                                            @if ($estudiante->servicio_terminado)
                                                 <span class="badge badge-sm bg-gradient-success">
                                                     Finalizado
                                                 </span>
@@ -143,7 +152,6 @@
 
                                     </tr>
                                 @endforeach
-
                             </tbody>
                         </table>
                     </div>
@@ -153,3 +161,35 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // Inicializa DataTables
+            const dt = $('#tablaEstudiantes').DataTable({
+                pageLength: parseInt($('#dtLength').val(), 10) || 10,
+                lengthChange: false,
+                searching: true,
+                dom: 'rt<"d-flex justify-content-between align-items-center px-3 pb-3"ip>',
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.8/i18n/es-ES.json"
+                },
+                columnDefs: [{
+                    orderable: false,
+                    targets: [5]
+                }]
+            });
+
+            // Tu buscador
+            $('#dtSearch').on('keyup change', function() {
+                dt.search(this.value).draw();
+            });
+
+            // Tu length
+            $('#dtLength').on('change', function() {
+                dt.page.len(parseInt(this.value, 10)).draw();
+            });
+        });
+    </script>
+@endpush

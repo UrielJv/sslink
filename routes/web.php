@@ -6,6 +6,7 @@ use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\EncargadoController;
 use App\Http\Controllers\AsistenciaController;
 use App\Http\Controllers\ReporteController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Mail;
 
 // Ruta raiz
@@ -25,9 +26,9 @@ Route::post('/logout', [AuthController::class, 'logout'])
     ->name('logout');
 
 // Dashboard protegido
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth')->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware('auth')
+    ->name('dashboard');
 
 
 // Rutas protegidas
@@ -54,10 +55,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/bitacora/{estudiante}',[AsistenciaController::class, 'descargarBitacora'])
         ->name('bitacora.descargar');
-        
+
     Route::get('/reportes/crear/{estudiante}', [ReporteController::class, 'create'])
         ->name('reportes.create');
-    
+
     Route::post('/reportes', [ReporteController::class, 'store'])
         ->name('reportes.store');
 
@@ -69,17 +70,15 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/reportes/encargado', [ReporteController::class, 'storeParaEncargado'])
          ->name('reportes.encargado.store');
-    
-         //No quiten esta ruta pofi
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
 
-        // Detalle / info de reportes
+    //No quiten esta ruta pofi
+    // Route::get('/dashboard', function () {
+    //     return view('dashboard');
+    // })->name('dashboard');
+
+    // Detalle / info de reportes
     Route::get('/dashboard/reportes/info', [ReporteController::class, 'info'])
         ->name('reportes.info');
-
-
 
     Route::get('/encargado/mi-informacion', [EncargadoController::class, 'info'])
     ->name('encargado.info');

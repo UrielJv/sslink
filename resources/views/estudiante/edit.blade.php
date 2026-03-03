@@ -5,7 +5,7 @@
 @section('page-title', 'Edición de prestador')
 
 @section('content')
-    <form action="{{ route('estudiantes.update', $estudiante->id) }}" method="POST">
+    <form id="formUsuario" action="{{ route('estudiantes.update', $estudiante->id) }}" method="POST">
         @csrf
         @method('PUT')
 
@@ -24,8 +24,9 @@
                             Cancelar
                         </a>
 
-                        <button type="submit" class="btn btn-sm btn-primary">
-                            Actualizar
+                        <button type="submit" id="btnSubmit" class="btn btn-sm btn-primary">
+                            <span id="btnText">Actualizar</span>
+                            <span id="btnSpinner" class="spinner-border spinner-border-sm d-none"></span>
                         </button>
                     </div>
                 </div>
@@ -38,11 +39,11 @@
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        Swal.fire({
-            title: 'Aviso de Privacidad',
-            html: `
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: 'Aviso de Privacidad',
+                    html: `
                 <p style="text-align: justify;">
                 La información personal registrada en el sistema SSLink será utilizada
                 exclusivamente para la gestión y seguimiento del servicio social,
@@ -53,12 +54,26 @@
                 proporcionada.
                 </p>
             `,
-            icon: 'info',
-            confirmButtonText: 'Aceptar',
-            allowOutsideClick: false
-        });
-    });
-</script>
+                    icon: 'info',
+                    confirmButtonText: 'Aceptar',
+                    allowOutsideClick: false
+                });
+            });
+        </script>
 
     </form>
 @endsection
+
+@push('javascript')
+    <script>
+        document.getElementById('formUsuario').addEventListener('submit', function() {
+            const btn = document.getElementById('btnSubmit');
+            const text = document.getElementById('btnText');
+            const spinner = document.getElementById('btnSpinner');
+
+            btn.disabled = true;
+            text.innerText = 'Actualizando...';
+            spinner.classList.remove('d-none');
+        });
+    </script>
+@endpush

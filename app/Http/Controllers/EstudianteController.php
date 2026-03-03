@@ -49,31 +49,41 @@ class EstudianteController extends Controller
         // Validamos que los campos que vienen del formulario esten correctos
         $request->validate([
             // Usuario
-            'nombre' => ['required', 'string', 'max:255'],
-            'apellido_paterno' => ['required', 'string', 'max:255'],
-            'apellido_materno' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'unique:users'],
-            'telefono' => ['required', 'unique:users'],
-            'password' => ['required', 'string', 'max:255'],
+            'nombre'            => ['required', 'string', 'max:255'],
+            'apellido_paterno'  => ['required', 'string', 'max:255'],
+            'apellido_materno'  => ['required', 'string', 'max:255'],
+            'email'             => ['required', 'email', 'unique:users'],
+            'telefono'          => ['required', 'unique:users', 'digits:10'],
+            'password'          => ['required', 'string', 'max:255'],
 
             // Estudiante
-            'encargado_id' => ['required', 'exists:encargados,id'],
-            'calle' => ['required', 'string', 'max:255'],
-            'codigo_postal' => ['required', 'string', 'max:255'],
-            'numero_exterior' => ['required', 'string', 'max:255'],
-            'numero_interior' => ['nullable', 'string', 'max:255'],
-            'colonia' => ['required', 'string', 'max:255'],
-            'municipio' => ['required', 'string', 'max:255'],
-            'sexo' => ['required', 'string', 'max:255'],
-            'telefono_tutor' => ['required', 'string', 'max:255'],
-            'matricula' => ['required', 'string', 'max:255'],
-            'carrera' => ['required', 'string', 'max:255'],
-            'escuela' => ['required', 'string', 'max:255'],
-            'cct' => ['required', 'string', 'max:255'],
-            'horas_requeridas' => ['required', 'integer'],
-            'area' => ['required', 'string', 'max:255'],
-            'fecha_inicio' => ['required', 'date', 'max:255'],
-            'fecha_fin' => ['nullable', 'date', 'max:255'],
+            'encargado_id'      => ['required', 'exists:encargados,id'],
+            'calle'             => ['required', 'string', 'max:255'],
+            'codigo_postal'     => ['required', 'string', 'max:255', 'digits:5'],
+            'numero_exterior'   => ['required', 'string', 'max:255'],
+            'numero_interior'   => ['nullable', 'string', 'max:255'],
+            'colonia'           => ['required', 'string', 'max:255'],
+            'municipio'         => ['required', 'string', 'max:255'],
+            'sexo'              => ['required', 'string', 'max:255'],
+            'telefono_tutor'    => ['required', 'string', 'max:255', 'digits:10'],
+            'matricula'         => ['required', 'string', 'max:255'],
+            'carrera'           => ['required', 'string', 'max:255'],
+            'escuela'           => ['required', 'string', 'max:255'],
+            'cct'               => ['required', 'string', 'max:255'],
+            'horas_requeridas'  => ['required', 'integer'],
+            'area'              => ['required', 'string', 'max:255'],
+            'fecha_inicio'      => ['required', 'date', 'max:255'],
+            'fecha_fin'         => ['nullable', 'date', 'max:255'],
+        ],
+
+        // Array asociativo para retornar errores
+        [
+            'codigo_postal.digits'      => 'El codigo postal debe llevar 5 digitos.',
+            'telefono_tutor.digits'     => 'El número telefonico del tutor debe de ser de 10 digitos.',
+            'telefono.digits'           => 'El número telefonico debe de ser de 10 digitos.',
+            'telefono.unique'           => 'El número telefonico escrito ya esta registrado.',
+            'email.unique'              => 'El correo escrito ya esta registrado.',
+            'password.required'         => 'El campo contraseña es obligatorio'
         ]);
 
         try {
@@ -192,7 +202,7 @@ class EstudianteController extends Controller
             'municipio'         => ['required', 'string', 'max:255'],
             'sexo'              => ['required', 'string', 'max:255'],
             'telefono_tutor'    => ['required', 'string', 'max:255'],
-            'matricula'         => ['required', 'string', 'max:255', 'unique:estudiantes,matricula,' . $estudiante->id],
+            'matricula'         => ['required', 'string', 'max:255'],
             'carrera'           => ['required', 'string', 'max:255'],
             'escuela'           => ['required', 'string', 'max:255'],
             'cct'               => ['required', 'string', 'max:255'],
@@ -200,6 +210,16 @@ class EstudianteController extends Controller
             'area'              => ['required', 'string', 'max:255'],
             'fecha_inicio'      => ['required', 'date'],
             'fecha_fin'         => ['nullable', 'date'],
+        ],
+
+        // Array asociativo para retornar errores
+        [
+            'codigo_postal.digits'      => 'El codigo postal debe llevar 5 digitos.',
+            'telefono_tutor.digits'     => 'El número telefonico debe de ser de 10 digitos.',
+            'telefono.digits'           => 'El número telefonico debe de ser de 10 digitos.',
+            'telefono.unique'           => 'El número telefonico escrito ya esta registrado.',
+            'email.unique'              => 'El correo escrito ya esta registrado.',
+            'password.required'         => 'El campo contraseña es obligatorio'
         ]);
 
         try {
