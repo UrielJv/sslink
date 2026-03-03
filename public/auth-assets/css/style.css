@@ -1175,7 +1175,7 @@
 -----------------------------------------------------*/
 
 .d2c_login_system {
-    background-image: url(../images/login_bg.png);
+    background-image: url('/auth-assets/images/login_bg.png');
     background-repeat: no-repeat;
     background-position: center;
     height: 100vh;
@@ -1251,7 +1251,7 @@
 }
 
 .d2c_lockscreen {
-    background-image: url(../images/lockscreen_bg.jpg);
+    background-image: url('/auth-assets/images/lockscreen_bg.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -1298,7 +1298,7 @@
 }
 
 .d2c_login_right_image {
-    background-image: url('../images/banner-login.jpg');
+    background-image: url('/auth-assets/images/banner-login.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
