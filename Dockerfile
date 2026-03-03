@@ -1,7 +1,6 @@
-# Imagen base con PHP 8.4 + Apache
 FROM php:8.4-apache
 
-# Instalar dependencias del sistema y extensiones necesarias
+# Dependencias del sistema + extensiones para Laravel
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -11,33 +10,32 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo_mysql zip gd \
-    && a2enmod rewrite \
-    && a2dismod mpm_event mpm_worker || true \
-    && a2enmod mpm_prefork \
     && rm -rf /var/lib/apt/lists/*
 
-# Instalar Composer
+# Apache: SOLO mpm_prefork (fix "More than one MPM loaded") + rewrite
+RUN a2enmod rewrite \
+    && a2dismod mpm_event mpm_worker || true \
+    && rm -f /etc/apache2/mods-enabled/mpm_event.load /etc/apache2/mods-enabled/mpm_event.conf \
+             /etc/apache2/mods-enabled/mpm_worker.load /etc/apache2/mods-enabled/mpm_worker.conf || true \
+    && a2enmod mpm_prefork
+
+# Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Definir directorio de trabajo
 WORKDIR /var/www/html
-
-# Copiar proyecto
 COPY . .
 
-# Permisos para Laravel
+# Permisos Laravel
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 storage bootstrap/cache
 
-# Instalar dependencias de Laravel
+# Dependencias PHP
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-# Configurar Apache para apuntar a /public
+# Apache apunta a /public
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
-
 RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/*.conf \
     && sed -ri -e 's!/var/www/!/var/www/html/public!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 EXPOSE 80
-
 CMD ["apache2-foreground"]
