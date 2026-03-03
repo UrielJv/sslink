@@ -1330,7 +1330,7 @@
 ----------------------------------------------------- */
 
 .d2c_error {
-    background-image: url(../images/login_bg.png);
+    background: url("/auth-assets/images/banner-login.jpg");
     background-repeat: no-repeat;
     background-position: center;
     height: 100vh;
