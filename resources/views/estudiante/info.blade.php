@@ -203,6 +203,19 @@
         </div>
     </div>
 
+    {{-- BOTÓN DE CERRAR SESIÓN --}}
+    <div class="row mt-4">
+        <div class="col-12">
+            <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                @csrf
+                <button type="submit" class="btn btn-outline-danger w-100">
+                    <i class="fas fa-sign-out-alt me-2"></i>
+                    Cerrar sesión
+                </button>
+            </form>
+        </div>
+    </div>
+
 </div>
 @endif
 @endsection

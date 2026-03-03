@@ -81,6 +81,12 @@ Route::middleware(['auth'])->group(function () {
 
 
 
+    Route::get('/encargado/mi-informacion', [EncargadoController::class, 'info'])
+    ->name('encargado.info');
+
+    Route::get('/admin/mi-informacion', function () {return view('admin.info');})
+    ->name('admin.info');
+
 });
 
 

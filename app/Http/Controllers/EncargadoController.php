@@ -203,4 +203,12 @@ class EncargadoController extends Controller
                 ->with('error', 'Ocurrió un error: ' . $e->getMessage());
         }
     }
+
+    public function info()
+    {
+        $user = auth()->user();
+        $encargado = $user->encargado;
+        
+        return view('encargado.info', compact('encargado'));
+    }
 }
