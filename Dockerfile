@@ -1,4 +1,5 @@
 FROM php:8.4-apache
+ARG CACHEBUST=1
 
 # Dependencias del sistema + extensiones necesarias (Laravel + MySQL + Spreadsheet)
 RUN apt-get update && apt-get install -y \
@@ -9,11 +10,14 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pdo_mysql zip gd \
     && rm -rf /var/lib/apt/lists/*
 
-# FIX DEFINITIVO: dejar SOLO un MPM (prefork)
-RUN rm -f /etc/apache2/mods-enabled/mpm_*.load /etc/apache2/mods-enabled/mpm_*.conf \
+# FIX MPM definitivo: deshabilitar event/worker, dejar SOLO prefork
+RUN a2dismod mpm_event mpm_worker || true \
+    && a2enmod mpm_prefork rewrite \
+    && rm -f /etc/apache2/mods-enabled/mpm_event.* /etc/apache2/mods-enabled/mpm_worker.* || true \
+    && rm -f /etc/apache2/mods-enabled/mpm_*.load /etc/apache2/mods-enabled/mpm_*.conf || true \
     && ln -sf ../mods-available/mpm_prefork.load /etc/apache2/mods-enabled/mpm_prefork.load \
     && ln -sf ../mods-available/mpm_prefork.conf /etc/apache2/mods-enabled/mpm_prefork.conf \
-    && a2enmod rewrite
+    && apache2ctl -M | grep mpm
 
 # Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
