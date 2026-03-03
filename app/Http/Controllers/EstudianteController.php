@@ -379,5 +379,6 @@ class EstudianteController extends Controller
     $estudiante = $user->estudiante ?? null;
 
     return view('estudiante.info', compact('estudiante'));
+
 }
 }

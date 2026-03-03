@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\EncargadoController;
 use App\Http\Controllers\AsistenciaController;
+use App\Http\Controllers\ReporteController;
 use Illuminate\Support\Facades\Mail;
 
 // Ruta raiz
@@ -53,8 +54,33 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/bitacora/{estudiante}',[AsistenciaController::class, 'descargarBitacora'])
         ->name('bitacora.descargar');
+        
+    Route::get('/reportes/crear/{estudiante}', [ReporteController::class, 'create'])
+        ->name('reportes.create');
+    
+    Route::post('/reportes', [ReporteController::class, 'store'])
+        ->name('reportes.store');
+
+    Route::get('/reportes', [ReporteController::class, 'index'])
+        ->name('reportes.index');
+
+    Route::get('/reportes/encargado/crear', [ReporteController::class, 'createParaEncargado'])
+        ->name('reportes.encargado.create');
+
+    Route::post('/reportes/encargado', [ReporteController::class, 'storeParaEncargado'])
+         ->name('reportes.encargado.store');
+    
+         //No quiten esta ruta pofi
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+        // Detalle / info de reportes
+    Route::get('/dashboard/reportes/info', [ReporteController::class, 'info'])
+        ->name('reportes.info');
+
+
 
 });
-
 
 

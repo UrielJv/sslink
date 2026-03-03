@@ -60,6 +60,13 @@
             <a href="{{ route('asistencias.index') }}" class="btn btn-outline-secondary">
                 <i class="ni ni-bold-left me-1"></i> Volver
             </a>
+             {{-- Reporte --}}
+                                        <td class="align-middle text-center">
+                                            <a href="{{ route('reportes.create', $estudiante->id) }}"
+                                                class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-flag me-1"></i> Subir reporte
+                                            </a>
+                                        
 
             <a href="{{ route('asistencias.create', ['estudiante_id' => $estudiante->id]) }}" class="btn btn-primary">
                 <i class="ni ni-fat-add me-1"></i> Nueva asistencia

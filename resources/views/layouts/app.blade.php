@@ -17,6 +17,11 @@
     <link href="https://demos.creative-tim.com/argon-dashboard-pro/assets/css/nucleo-svg.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
+    
+    <!-- DataTable -->
+     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <!-- Argon CSS -->
     <link href="{{ asset('assets/css/argon-dashboard.css') }}" rel="stylesheet">
 
@@ -155,6 +160,7 @@
     <script src="{{ asset('assets/js/argon-dashboard.min.js') }}"></script>
 
     @stack('javascript')
+    @stack('scripts')
 
 </body>
 

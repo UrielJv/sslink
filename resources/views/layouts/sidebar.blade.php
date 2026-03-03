@@ -43,6 +43,7 @@
                         <span class="nav-link-text ms-1">Encargados</span>
                     </a>
                 </li>
+     
             @endcan
             @role('encargado')
                 @can('asistencia.ver')
@@ -69,7 +70,42 @@
                     <span class="nav-link-text ms-1">Mi información</span>
                 </a>
             </li>
+           <li class="nav-item">
+    <a class="nav-link {{ request()->routeIs('reportes.*') ? 'active' : '' }}"
+       href="{{ route('reportes.info') }}">
 
+        <div
+            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="fas fa-flag text-dark text-sm opacity-10"></i>
+        </div>
+                    <span class="nav-link-text ms-1">
+                    Todos los Reportes
+                    </span>
+                        </a>
+                    </li>
+            @role('estudiante')
+                       <li class="nav-item">
+    <a class="nav-link {{ request()->routeIs('reportes.*') ? 'active' : '' }}"
+       href="{{ route('reportes.index') }}">
+        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="ni ni-collection text-dark text-sm opacity-10"></i>
+        </div>
+        <span class="nav-link-text ms-1"> Mis Reportes</span>
+    </a>
+</li>
+
+
+<li class="nav-item">
+    <a class="nav-link {{ request()->routeIs('reportes.encargado.create') ? 'active' : '' }}"
+        href="{{ route('reportes.encargado.create') }}">
+        <div
+            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="ni ni-send text-danger text-sm opacity-10"></i>
+        </div>
+        <span class="nav-link-text ms-1">Reportar</span>
+    </a>
+</li>
+@endrole
             {{-- <li class="nav-item">
                 <a class="nav-link " href="../pages/tables.html">
                     <div

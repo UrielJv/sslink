@@ -42,27 +42,34 @@
                         <table id="tablaEstudiantes" class="table align-items-center mb-0">
                             <thead>
                                 <tr>
-                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Nombre
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+                                        Nombre
                                     </th>
-                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Matrícula
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+                                        Matrícula
                                     </th>
-                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Carrera
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+                                        Carrera
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">
-                                        Horas</th>
+                                        Horas
+                                    </th>
                                     <th
                                         class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">
-                                        Estado</th>
+                                        Estado
+                                    </th>
                                     <th
                                         class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">
-                                        Acciones</th>
+                                        Acciones
+                                    </th>
                                 </tr>
                             </thead>
-                            <tbody>
 
+                            <tbody>
                                 @foreach ($estudiantes as $estudiante)
                                     <tr>
+
                                         {{-- Nombre --}}
                                         <td>
                                             <div class="d-flex px-2 py-1">
@@ -96,11 +103,12 @@
                                         {{-- Horas --}}
                                         <td class="text-center">
                                             <span class="text-sm font-weight-bold">
-                                                {{ $estudiante->horas_actuales }} / {{ $estudiante->horas_requeridas }} H
+                                                {{ $estudiante->horas_actuales }} /
+                                                {{ $estudiante->horas_requeridas }} H
                                             </span>
                                         </td>
 
-                                        {{-- Estado dinámico --}}
+                                        {{-- Estado --}}
                                         <td class="text-center">
                                             @if ($estudiante->servicio_terminado)
                                                 <span class="badge badge-sm bg-gradient-success">
@@ -121,10 +129,12 @@
                                             </a>
                                         </td>
 
+                                       
+
                                     </tr>
                                 @endforeach
-
                             </tbody>
+
                         </table>
                     </div>
                 </div>
