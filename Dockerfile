@@ -30,9 +30,8 @@ RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
 # Apache apunta a /public
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
-
 RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/*.conf \
     && sed -ri -e 's!/var/www/!/var/www/html/public!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# Hacer que Apache escuche el puerto que Railway asigna
-CMD bash -lc "sed -i \"s/Listen 80/Listen ${PORT:-80}/\" /etc/apache2/ports.conf && apache2-foreground"
+EXPOSE 80
+CMD ["apache2-foreground"]
